@@ -9,10 +9,8 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class SinaisVitaisModel {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-
     private int frequenciaCardiaca;
     private int frequenciaRespiratoria;
     private int pressaoSistolica;
@@ -20,10 +18,10 @@ public class SinaisVitaisModel {
     private int saturacao;
     private Double temperatura;
 
-    //parametro de associação entre duas tabelas
     @ManyToOne
     private PacienteModel paciente;
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -80,14 +78,16 @@ public class SinaisVitaisModel {
         this.temperatura = temperatura;
     }
 
-    
-
-    
- // método para calcular a Pressão arterial media
-    public Double getPressaoMedia(){
-        return pressaoSistolica + pressaoDiastolica/2.0;
-        
+    public PacienteModel getPaciente() {
+        return paciente;
     }
-    
 
+    public void setPaciente(PacienteModel paciente) {
+        this.paciente = paciente;
+    }
+
+    // Método para calcular a Pressão Arterial Média
+    public Double getPressaoMedia() {
+        return (pressaoSistolica + pressaoDiastolica) / 2.0;
+    }
 }

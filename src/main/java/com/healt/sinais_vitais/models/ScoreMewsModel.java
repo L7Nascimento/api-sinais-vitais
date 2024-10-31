@@ -1,6 +1,6 @@
 package com.healt.sinais_vitais.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,32 +11,16 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class ScoreMewsModel {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     private PacienteModel pacienteModel;
 
+    private int pontuacao;
+    private LocalDateTime dataHora;
 
-    private int pontuação;
-    private LocalDate dataHora;
-
-    public int getPontuação() {
-        return pontuação;
-    }
-
-    public LocalDate getDataHora() {
-        return dataHora;
-    }
-
-    public void setPontuação(int pontuação) {
-        this.pontuação = pontuação;
-    }
-
-    public void setDataHora(LocalDate dataHora) {
-        this.dataHora = dataHora;
-    }
-
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -44,6 +28,28 @@ public class ScoreMewsModel {
     public void setId(Long id) {
         this.id = id;
     }
-    
 
+    public PacienteModel getPacienteModel() {
+        return pacienteModel;
+    }
+
+    public void setPacienteModel(PacienteModel pacienteModel) {
+        this.pacienteModel = pacienteModel;
+    }
+
+    public int getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
 }

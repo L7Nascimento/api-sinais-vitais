@@ -1,9 +1,12 @@
 package com.healt.sinais_vitais.models;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class PacienteModel {
@@ -15,12 +18,10 @@ public class PacienteModel {
     private String telefone;
     private String email;
 
+    @OneToMany(mappedBy = "paciente")
+    private List<SinaisVitaisModel> sinaisVitais;
+
     // Getters e Setters
-
-
-
-    //4
-
     public Long getId() {
         return id;
     }
@@ -61,5 +62,11 @@ public class PacienteModel {
         this.email = email;
     }
 
-    
+    public List<SinaisVitaisModel> getSinaisVitais() {
+        return sinaisVitais;
+    }
+
+    public void setSinaisVitais(List<SinaisVitaisModel> sinaisVitais) {
+        this.sinaisVitais = sinaisVitais;
+    }
 }

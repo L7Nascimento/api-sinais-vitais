@@ -1,62 +1,56 @@
 package com.healt.sinais_vitais.controller;
 
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.healt.sinais_vitais.models.SinaisVitaisModel;
-import com.healt.sinais_vitais.repositories.SinaisVitaisRepository;
+import com.healt.sinais_vitais.services.SinaisVitaisServices;
+
 
 @RestController
 @RequestMapping("/sinais-vitais")
 public class SinaisVitaisController {
 
     @Autowired
-    private SinaisVitaisRepository sinaisVitaisRepository;
+    private SinaisVitaisServices sinaisVitaisService;
 
     @GetMapping
     public List<SinaisVitaisModel> listarSinaisVitais() {
-        return sinaisVitaisRepository.findAll();
-    }
-
-    @PostMapping
-    public SinaisVitaisModel adicionarSinaisVitais(@RequestBody SinaisVitaisModel sinaisVitaisModel) {
-        return sinaisVitaisRepository.save(sinaisVitaisModel);
+        return sinaisVitaisService.listarTodos();
     }
 
     @GetMapping("/{id}")
     public SinaisVitaisModel listarSinaisPorId(@PathVariable Long id) {
-        Optional<SinaisVitaisModel> sinaisVitaisDetalhes = sinaisVitaisRepository.findById(id);
-        if (sinaisVitaisDetalhes.isPresent()) {
-            return sinaisVitaisDetalhes.get();
-        }
-        return null;
+        return sinaisVitaisService.buscarPorId(id);
+    }
+
+    @PostMapping
+    public SinaisVitaisModel adicionarSinaisVitais(@RequestBody SinaisVitaisModel sinaisVitaisModel) {
+        return sinaisVitaisService.salvar(sinaisVitaisModel);
     }
 
     @PutMapping("/{id}")
-    public SinaisVitaisModel atualizaSinaisVitais(@PathVariable Long id, @RequestBody SinaisVitaisModel sinaisVitaisAtualizado) {
-        Optional<SinaisVitaisModel> atualizandoSinaisVitais = sinaisVitaisRepository.findById(id);
-        if(atualizandoSinaisVitais.isPresent()){
-            SinaisVitaisModel sinaisVitais =  atualizandoSinaisVitais.get();
-            sinaisVitais.setFrequenciaCardiaca(sinaisVitaisAtualizado.getFrequenciaCardiaca());
-            sinaisVitais.setFrequenciaRespiratoria(sinaisVitaisAtualizado.getFrequenciaRespiratoria());
-            sinaisVitais.setPressaoSistolica(sinaisVitaisAtualizado.getPressaoSistolica());
-            sinaisVitais.setPressaoDiastolica(sinaisVitaisAtualizado.getPressaoDiastolica());
-            sinaisVitais.setSaturacao(sinaisVitaisAtualizado.getSaturacao());
-            sinaisVitais.setTemperatura(sinaisVitaisAtualizado.getTemperatura());
-            return sinaisVitaisRepository.save(sinaisVitais);
-        }
-        return null;
+    public SinaisVitaisModel atualizarSinaisVitais(@PathVariable Long id, @RequestBody SinaisVitaisModel sinaisVitaisAtualizado) {
+        sinaisVitaisAtualizado.setId(id);
+        return sinaisVitaisService.salvar(sinaisVitaisAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    public void deletarSinaisPorID(@PathVariable Long id) {
-        sinaisVitaisRepository.deleteById(id);
+    public void deletarSinaisPorId(@PathVariable Long id) {
+        sinaisVitaisService.deletarPorId(id);
     }
 
     @DeleteMapping
     public void deletarTodosSinaisVitais() {
-        sinaisVitaisRepository.deleteAll();
+        sinaisVitaisService.deletarTodos();
     }
 }
