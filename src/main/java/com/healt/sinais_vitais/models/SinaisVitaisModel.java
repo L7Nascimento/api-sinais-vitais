@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class SinaisVitaisModel extends PacienteModel {
+public class SinaisVitaisModel {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -19,58 +19,61 @@ public class SinaisVitaisModel extends PacienteModel {
     private int pressaoDiastolica;
     private int saturacao;
     private Double temperatura;
-    
+
     //parametro de associação entre duas tabelas
     @ManyToOne
-    private PacienteModel pacienteModel;
+    private PacienteModel paciente;
 
-    //getter e setter
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public int getFrequenciaCardiaca() {
         return frequenciaCardiaca;
+    }
+
+    public void setFrequenciaCardiaca(int frequenciaCardiaca) {
+        this.frequenciaCardiaca = frequenciaCardiaca;
     }
 
     public int getFrequenciaRespiratoria() {
         return frequenciaRespiratoria;
     }
 
-    public int getPressaoSistolica() {
-        return pressaoSistolica;
-    }
-
-    public int getPresssaoDiastolica() {
-        return pressaoDiastolica;
-    }
-
-    public int getSaturacao() {
-        return saturacao;
-    }
-
-    public Double getTemperatura() {
-        return temperatura;
-    }
-    
-
-   
-
-    public void setFrequenciaCardiaca(int frequenciaCardiaca) {
-        this.frequenciaCardiaca = frequenciaCardiaca;
-    }
-
     public void setFrequenciaRespiratoria(int frequenciaRespiratoria) {
         this.frequenciaRespiratoria = frequenciaRespiratoria;
+    }
+
+    public int getPressaoSistolica() {
+        return pressaoSistolica;
     }
 
     public void setPressaoSistolica(int pressaoSistolica) {
         this.pressaoSistolica = pressaoSistolica;
     }
 
+    public int getPressaoDiastolica() {
+        return pressaoDiastolica;
+    }
+
     public void setPressaoDiastolica(int pressaoDiastolica) {
         this.pressaoDiastolica = pressaoDiastolica;
     }
 
+    public int getSaturacao() {
+        return saturacao;
+    }
+
     public void setSaturacao(int saturacao) {
         this.saturacao = saturacao;
+    }
+
+    public Double getTemperatura() {
+        return temperatura;
     }
 
     public void setTemperatura(Double temperatura) {
@@ -78,13 +81,12 @@ public class SinaisVitaisModel extends PacienteModel {
     }
 
     
+
+    
  // método para calcular a Pressão arterial media
     public Double getPressaoMedia(){
         return pressaoSistolica + pressaoDiastolica/2.0;
-    }
-
-    public Long getId() {
-        return id;
+        
     }
     
 

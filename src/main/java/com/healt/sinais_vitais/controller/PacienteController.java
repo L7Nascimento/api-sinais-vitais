@@ -19,7 +19,7 @@ import com.healt.sinais_vitais.repositories.PacienteRepository;
 
 
 @RestController
-@RequestMapping("/sinaisvitais")
+@RequestMapping("/paciente")
 public class PacienteController {
     @Autowired
     private PacienteRepository pacienteRepository;
